@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import type { Campaign, Donation, CreateCampaignInput, DonateInput } from '../types';
 import { cache } from '../utils/cache';
 import { generateId, formatXLM } from '../utils/stellar';
+import { buildAndSubmitDonationTx, ensureFunded } from '../utils/stellarTx';
 
 const CACHE_KEY_CAMPAIGNS = 'campaigns';
 const CACHE_TTL = 30_000; // 30 seconds
@@ -130,35 +131,64 @@ export function useCampaigns() {
     );
 
     const donate = useCallback(
-        async (input: DonateInput, donor: string): Promise<Donation> => {
+        async (
+            input: DonateInput,
+            donor: string,
+            signTx?: (xdr: string) => Promise<string>
+        ): Promise<Donation> => {
             setIsLoading(true);
             setError(null);
-            try {
-                await new Promise(res => setTimeout(res, 800));
-                const donation: Donation = {
-                    id: generateId(),
-                    campaignId: input.campaignId,
-                    donor: donor || 'Anonymous',
-                    amount: input.amount,
-                    timestamp: Date.now(),
-                    txHash: `TX${generateId().toUpperCase()}`,
-                };
 
-                const current = loadCampaigns();
-                const updated = current.map(c => {
-                    if (c.id !== input.campaignId) return c;
-                    return {
-                        ...c,
-                        raised: c.raised + input.amount,
-                        donations: [donation, ...c.donations],
-                    };
-                });
-                saveCampaigns(updated);
-                setCampaigns(updated);
-                return donation;
-            } finally {
-                setIsLoading(false);
+            let txHash = `DEMO_${generateId().toUpperCase()}`;
+            let isRealTx = false;
+
+            // Find campaign title for memo
+            const current = loadCampaigns();
+            const campaign = current.find(c => c.id === input.campaignId);
+            const campaignTitle = campaign?.title ?? 'Campaign';
+
+            // Try real Stellar testnet transaction if wallet is connected
+            if (signTx && donor && donor !== 'Anonymous') {
+                try {
+                    // Auto-fund from Friendbot if account doesn't exist yet
+                    await ensureFunded(donor);
+                    const result = await buildAndSubmitDonationTx(
+                        donor,
+                        input.amount,
+                        campaignTitle,
+                        signTx
+                    );
+                    txHash = result.hash;
+                    isRealTx = true;
+                } catch (err) {
+                    // Real tx failed — fall back to simulated
+                    console.warn('Real Stellar tx failed, using simulated:', err);
+                }
             }
+
+            const donation: Donation = {
+                id: generateId(),
+                campaignId: input.campaignId,
+                donor: donor || 'Anonymous',
+                amount: input.amount,
+                timestamp: Date.now(),
+                txHash: isRealTx
+                    ? txHash  // real Stellar tx hash
+                    : `DEMO_${txHash.slice(-8)}`, // clearly labelled as demo
+            };
+
+            const updated = current.map(c => {
+                if (c.id !== input.campaignId) return c;
+                return {
+                    ...c,
+                    raised: c.raised + input.amount,
+                    donations: [donation, ...c.donations],
+                };
+            });
+            saveCampaigns(updated);
+            setCampaigns(updated);
+            setIsLoading(false);
+            return donation;
         },
         []
     );

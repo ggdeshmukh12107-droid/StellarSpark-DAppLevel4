@@ -39,7 +39,13 @@ function App() {
     if (!donatingTo) return;
     setLoadingCampaignId(donatingTo.id);
     try {
-      await donate({ campaignId: donatingTo.id, amount }, wallet.publicKey || 'Anonymous');
+      // Pass signTransaction so a real Stellar testnet tx is submitted
+      // (appears in Freighter history). Falls back to demo if it fails.
+      await donate(
+        { campaignId: donatingTo.id, amount },
+        wallet.publicKey || 'Anonymous',
+        wallet.isConnected ? wallet.signTransaction : undefined
+      );
       addToast(`💫 Donated ${amount} XLM to "${donatingTo.title}"!`, 'success');
     } finally {
       setLoadingCampaignId(null);
