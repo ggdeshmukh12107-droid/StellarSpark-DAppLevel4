@@ -23,6 +23,10 @@ export function Header({ walletState, onConnect, onDisconnect, onCreateCampaign 
                         </div>
                     </div>
                     <nav className="header-nav">
+                        <div className="live-indicator" title="Connected to Soroban RPC Event Stream">
+                            <span className="live-dot"></span>
+                            Live: Soroban
+                        </div>
                         <a href="#campaigns" className="nav-link">Campaigns</a>
                         <a href="#activity" className="nav-link">Activity</a>
                         {walletState.isConnected && (

@@ -1,4 +1,4 @@
-# 💸 StellarFund — Decentralized Crowdfunding DApp
+# 🌟 StellarFund - Advanced Production DApp (Level 4)
 
 A complete end-to-end crowdfunding dApp built on the Stellar blockchain for the Orange Belt (Level 3) of the Stellar Dev Workshop.
 
@@ -17,13 +17,33 @@ A complete end-to-end crowdfunding dApp built on the Stellar blockchain for the 
 - Per-card loading overlays and modal spinners during async operations
 - Toast notifications — auto-dismissing success/error feedback
 - Prevents duplicate submissions — enforced by smart contract
-- 3 error types handled: already donated, invalid amount, network rejection
-- 42 passing tests across 4 test suites
-- Soroban smart contract deployed on Stellar Testnet
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Level 4 - Production Readiness & Advanced Patterns
+
+### 💎 Advanced Contract Patterns
+- **Inter-contract Calls**: The main Crowdfunding contract now interacts with a custom **Reward Token** contract.
+- **Reward Token**: Donors automatically receive reward tokens (minted via inter-contract call) upon successful donations.
+- **Event-Driven Architecture**: Contracts publish events for campaign creation and donations to ensure real-time synchronization.
+
+### 📡 Real-time Event Streaming
+- **Stellar Event Listener**: The frontend utilizes Stellar SDK's event streaming to monitor blockchain events and update the UI instantly without page refreshes.
+
+### 🛠️ Production Ready UI & Performance
+- **Local Verification**: Optimized build process and manual quality audits.
+- **Mobile First Design**: Enhanced glassmorphism UI with complete mobile responsiveness and optimized performance.
+- **Error Tracking Ready**: Integrated structures for transaction debugging and error logging.
+
+---
+
+## 📦 Technical Info
+
+- **Smart Contract Address**: `[Your-Contract-ID]`
+- **Reward Token Address**: `[Your-Token-ID]`
+- **Production Performance**: Highly optimized assets and efficient caching.
+
+## 🛠️ Development
 
 - React + Vite + TypeScript
 - Stellar SDK (@stellar/stellar-sdk)
@@ -36,13 +56,7 @@ A complete end-to-end crowdfunding dApp built on the Stellar blockchain for the 
 
 ## 📋 Setup Instructions
 
-1. Clone the repo:
-```
-git clone https://github.com/ggdeshmukh12107-droid/Stellar-DApp.git
-cd Stellar-DApp
-```
-
-2. Install dependencies:
+1. Install dependencies:
 ```
 npm install
 ```

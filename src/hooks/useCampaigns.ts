@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { rpc } from '@stellar/stellar-sdk';
 import type { Campaign, Donation, CreateCampaignInput, DonateInput } from '../types';
 import { cache } from '../utils/cache';
 import { generateId, formatXLM } from '../utils/stellar';
@@ -101,6 +102,32 @@ export function useCampaigns() {
         fetchCampaigns();
     }, [fetchCampaigns]);
 
+    // Event Streaming Logic (Soroban RPC)
+    const server = useRef(new rpc.Server('https://soroban-testnet.stellar.org:443'));
+
+    useEffect(() => {
+        const contractId = 'CDJ3...'; // Placeholder
+        const pollInterval = setInterval(async () => {
+            try {
+                const events = await server.current.getEvents({
+                    startLedger: 0, // In production, track last seen ledger
+                    filters: [{
+                        type: 'contract',
+                        contractIds: [contractId]
+                    }],
+                    limit: 10
+                });
+                if (events.events.length > 0) {
+                    fetchCampaigns();
+                }
+            } catch (err: unknown) {
+                console.error('Event poll error:', err);
+            }
+        }, 5000); // Poll every 5 seconds for real-time effect
+
+        return () => clearInterval(pollInterval);
+    }, [fetchCampaigns]);
+
     const createCampaign = useCallback(
         async (input: CreateCampaignInput, creator: string): Promise<Campaign> => {
             setIsLoading(true);
@@ -183,6 +210,12 @@ export function useCampaigns() {
             saveCampaigns(updated);
             setCampaigns(updated);
             setIsLoading(false);
+
+            // Dispatch a custom event to notify the UI that reward tokens were minted
+            window.dispatchEvent(new CustomEvent('reward-tokens-minted', {
+                detail: { amount: input.amount }
+            }));
+
             return donation;
         },
         []

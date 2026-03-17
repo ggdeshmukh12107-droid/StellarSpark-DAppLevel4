@@ -1,4 +1,5 @@
 import type { Campaign } from '../types';
+import { useMemo } from 'react';
 import { ProgressBar } from './ProgressBar';
 import { LoadingSpinner } from './LoadingSpinner';
 import { truncateAddress, formatTimeRemaining, formatXLM } from '../utils/stellar';
@@ -12,7 +13,7 @@ interface CampaignCardProps {
 
 export function CampaignCard({ campaign, onDonate, isConnected, isLoading }: CampaignCardProps) {
     const { title, description, creator, goal, raised, deadline, donations } = campaign;
-    const isEnded = deadline < Date.now();
+    const isEnded = useMemo(() => deadline < Date.now(), [deadline]);
     const isFunded = raised >= goal;
 
     return (

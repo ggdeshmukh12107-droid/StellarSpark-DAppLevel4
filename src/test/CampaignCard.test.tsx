@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CampaignCard } from '../components/CampaignCard';
 import type { Campaign } from '../types';
@@ -18,57 +18,57 @@ const mockCampaign: Campaign = {
 
 describe('CampaignCard', () => {
     it('renders the campaign title', () => {
-        render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected />);
-        expect(screen.getByText('Test Campaign')).toBeInTheDocument();
+        const { getByText } = render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected />);
+        expect(getByText('Test Campaign')).toBeInTheDocument();
     });
 
     it('renders the campaign description', () => {
-        render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected />);
-        expect(screen.getByText(/A test campaign description/)).toBeInTheDocument();
+        const { getByText } = render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected />);
+        expect(getByText(/A test campaign description/)).toBeInTheDocument();
     });
 
     it('shows "Active" badge for active campaigns', () => {
-        render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected />);
-        expect(screen.getByText('Active')).toBeInTheDocument();
+        const { getByText } = render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected />);
+        expect(getByText('Active')).toBeInTheDocument();
     });
 
     it('shows donate button when wallet connected', () => {
-        render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected />);
-        expect(screen.getByText('Donate XLM')).toBeInTheDocument();
+        const { getByText } = render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected />);
+        expect(getByText('Donate XLM')).toBeInTheDocument();
     });
 
     it('shows lock message when wallet not connected', () => {
-        render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected={false} />);
-        expect(screen.getByText('🔒 Connect to Donate')).toBeInTheDocument();
+        const { getByText } = render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected={false} />);
+        expect(getByText('🔒 Connect to Donate')).toBeInTheDocument();
     });
 
     it('donate button is disabled when not connected', () => {
-        render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected={false} />);
-        const btn = screen.getByRole('button', { name: /connect to donate/i });
+        const { getByRole } = render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected={false} />);
+        const btn = getByRole('button', { name: /connect to donate/i });
         expect(btn).toBeDisabled();
     });
 
     it('calls onDonate when donate button clicked', async () => {
         const onDonate = vi.fn();
-        render(<CampaignCard campaign={mockCampaign} onDonate={onDonate} isConnected />);
-        await userEvent.click(screen.getByText('Donate XLM'));
+        const { getByText } = render(<CampaignCard campaign={mockCampaign} onDonate={onDonate} isConnected />);
+        await userEvent.click(getByText('Donate XLM'));
         expect(onDonate).toHaveBeenCalledWith(mockCampaign);
     });
 
     it('shows loading overlay when isLoading', () => {
-        render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected isLoading />);
-        expect(screen.getByText('Processing...')).toBeInTheDocument();
+        const { getByText } = render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected isLoading />);
+        expect(getByText('Processing...')).toBeInTheDocument();
     });
 
     it('shows donor count', () => {
-        render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected />);
-        expect(screen.getByText('0')).toBeInTheDocument();
-        expect(screen.getByText('donors')).toBeInTheDocument();
+        const { getByText } = render(<CampaignCard campaign={mockCampaign} onDonate={vi.fn()} isConnected />);
+        expect(getByText('0')).toBeInTheDocument();
+        expect(getByText('donors')).toBeInTheDocument();
     });
 
     it('shows "Ended" badge for expired campaign', () => {
         const ended: Campaign = { ...mockCampaign, deadline: Date.now() - 1000 };
-        render(<CampaignCard campaign={ended} onDonate={vi.fn()} isConnected />);
-        expect(screen.getByText('Ended')).toBeInTheDocument();
+        const { getByText } = render(<CampaignCard campaign={ended} onDonate={vi.fn()} isConnected />);
+        expect(getByText('Ended')).toBeInTheDocument();
     });
 });

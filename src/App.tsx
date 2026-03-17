@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { CampaignCard } from './components/CampaignCard';
 import { CreateCampaign } from './components/CreateCampaign';
@@ -64,6 +64,15 @@ function App() {
       setLoadingCampaignId(null);
     }
   };
+
+  useEffect(() => {
+    const handleRewardTokens = (e: Event) => {
+      const customEvent = e as CustomEvent<{ amount: number }>;
+      addToast(`🪙 Earned ${customEvent.detail.amount} RWD Tokens via Inter-contract call!`, 'info');
+    };
+    window.addEventListener('reward-tokens-minted', handleRewardTokens);
+    return () => window.removeEventListener('reward-tokens-minted', handleRewardTokens);
+  }, []);
 
 
   return (

@@ -1,5 +1,5 @@
 #![no_std]
-use soroban_sdk::{contract, contractimpl, contracttype, Address, Env, Map, String, Vec};
+use soroban_sdk::{contract, contractimpl, contracttype, Address, Env, Map, String, Vec, Symbol, symbol_short, IntoVal};
 
 #[contracttype]
 #[derive(Clone)]
@@ -18,6 +18,7 @@ pub enum DataKey {
     Campaign(String),
     Campaigns,
     Donations(String),
+    RewardToken,
 }
 
 #[contract]
@@ -25,6 +26,12 @@ pub struct StellarFundContract;
 
 #[contractimpl]
 impl StellarFundContract {
+    /// Set the reward token contract address
+    pub fn set_reward_token(env: Env, admin: Address, token_address: Address) {
+        admin.require_auth();
+        env.storage().instance().set(&DataKey::RewardToken, &token_address);
+    }
+
     /// Create a new crowdfunding campaign
     pub fn create_campaign(
         env: Env,
@@ -53,6 +60,8 @@ impl StellarFundContract {
             .unwrap_or(Vec::new(&env));
         campaigns.push_back(id);
         env.storage().persistent().set(&DataKey::Campaigns, &campaigns);
+
+        env.events().publish((symbol_short!("created"),), campaign.clone());
 
         campaign
     }
@@ -89,10 +98,21 @@ impl StellarFundContract {
             .get(&DataKey::Donations(campaign_id.clone()))
             .unwrap_or(Map::new(&env));
         let prev = donations.get(donor.clone()).unwrap_or(0);
-        donations.set(donor, prev + amount);
+        donations.set(donor.clone(), prev + amount);
         env.storage()
             .persistent()
-            .set(&DataKey::Donations(campaign_id), &donations);
+            .set(&DataKey::Donations(campaign_id.clone()), &donations);
+
+        // Inter-contract call: Mint reward tokens (1 token per XLM donated for demo)
+        if let Some(token_address) = env.storage().instance().get::<DataKey, Address>(&DataKey::RewardToken) {
+            env.invoke_contract::<()>(
+                &token_address,
+                &Symbol::new(&env, "mint"),
+                soroban_sdk::vec![&env, donor.clone().into_val(&env), amount.into_val(&env)],
+            );
+        }
+
+        env.events().publish((symbol_short!("donate"), donor, amount), campaign_id);
     }
 
     /// Get campaign details by ID

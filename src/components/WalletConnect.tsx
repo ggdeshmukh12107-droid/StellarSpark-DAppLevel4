@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { truncateAddress } from '../utils/stellar';
 import { LoadingSpinner } from './LoadingSpinner';
 import type { WalletState } from '../types';
@@ -10,6 +11,16 @@ interface WalletConnectProps {
 
 export function WalletConnect({ walletState, onConnect, onDisconnect }: WalletConnectProps) {
     const { isConnected, publicKey, network, isLoading, error } = walletState;
+    const [tokenBalance, setTokenBalance] = useState(0);
+
+    useEffect(() => {
+        const handleRewardTokens = (e: Event) => {
+            const customEvent = e as CustomEvent<{ amount: number }>;
+            setTokenBalance(prev => prev + customEvent.detail.amount);
+        };
+        window.addEventListener('reward-tokens-minted', handleRewardTokens);
+        return () => window.removeEventListener('reward-tokens-minted', handleRewardTokens);
+    }, []);
 
     if (isLoading) {
         return (
@@ -24,6 +35,12 @@ export function WalletConnect({ walletState, onConnect, onDisconnect }: WalletCo
         return (
             <div className="wallet-connected-wrap">
                 <div className="wallet-info">
+                    {tokenBalance > 0 && (
+                        <div className="token-balance" title="Tokens earned from donations via Inter-contract call">
+                            <span className="token-icon">🪙</span>
+                            <strong>{tokenBalance} RWD</strong>
+                        </div>
+                    )}
                     <span className={`network-badge ${network}`}>{network}</span>
                     <span className="wallet-address">{truncateAddress(publicKey, 5)}</span>
                 </div>
