@@ -1,8 +1,21 @@
 # 🌟 StellarFund - Advanced Production DApp (Level 4)
 
-A complete end-to-end crowdfunding dApp built on the Stellar blockchain for the Orange Belt (Level 3) of the Stellar Dev Workshop.
+A complete end-to-end crowdfunding dApp built on the Stellar blockchain, featuring inter-contract calls, real-time event streaming, and CI/CD.
 
-🌐 **Live Demo:** *https://stellarfund.netlify.app*
+🌐 **Live Demo:** [https://stellarspark-dapplevel4.vercel.app/](https://stellarspark-dapplevel4.vercel.app/) *(Deploys from the `main` branch of this repository)*
+
+---
+
+## 🏆 Level 4 Required Deliverables
+
+| Requirement | Proof |
+|---|---|
+| **Live Demo Link** | [Active Vercel Deployment](https://stellarspark-dapplevel4.vercel.app/) |
+| **Mobile Responsive View** | See *Screenshots* section below |
+| **CI/CD Pipeline Running** | ![CI Status](https://github.com/ggdeshmukh12107-droid/StellarSpark-DAppLevel4/actions/workflows/ci.yml/badge.svg) (See *Screenshots* for full pipeline view) |
+| **Main Contract Address** | `CDEPLOY_YOUR_CONTRACT_ADDRESS_ON_STELLAR_TESTNET` (Placeholder for simulation) |
+| **Reward Token Address** | `CTOKEN_YOUR_ADDRESS_ON_STELLAR_TESTNET` (Placeholder for simulation) |
+| **Minimum 8+ Commits** | [View Commit History](https://github.com/ggdeshmukh12107-droid/StellarSpark-DAppLevel4/commits/main/) (9 meaningful logical commits) |
 
 ---
 
@@ -138,8 +151,14 @@ https://stellar.expert/explorer/testnet/contract/CDEPLOY_YOUR_CONTRACT_ADDRESS_O
 ### Connected — Testnet Badge
 <img width="1024" alt="Header showing TESTNET badge and wallet address after connecting Freighter" src="public/screenshots/02-connected.png" />
 
+### Mobile Responsive View
+<img width="390" alt="Mobile responsive view of the StellaFund DApp on iPhone 12 Pro dimensions" src="public/screenshots/level4-mobile-view.png" />
+
+### CI/CD Pipeline Success
+<img width="1024" alt="GitHub Actions CI/CD pipeline showing 100% successful jobs on push to main" src="public/screenshots/level4-cicd-pipeline.png" />
+
 ### Campaign Grid & Progress Bars
-<img width="1024" alt="Active campaigns grid with real-time progress bars" src="public/screenshots/03-campaigns.png" />
+<img width="1024" alt="Active campaigns grid with real-time progress bars and Live Soroban indicator" src="public/screenshots/03-campaigns.png" />
 
 ### Donate Modal
 <img width="720" alt="Donate XLM modal with amount selection and custom input" src="public/screenshots/04-donate-modal.png" />
@@ -160,6 +179,6 @@ https://stellar.expert/explorer/testnet/contract/CDEPLOY_YOUR_CONTRACT_ADDRESS_O
 
 ## 🔗 Links
 
-- 🌐 Live App: *https://stellarfund.netlify.app*
-- 📜 Contract: https://stellar.expert/explorer/testnet/contract/CDEPLOY_YOUR_CONTRACT_ADDRESS_ON_STELLAR_TESTNET
+- 🌐 Live App: [https://stellarspark-dapplevel4.vercel.app/](https://stellarspark-dapplevel4.vercel.app/)
+- 📜 GitHub Repository: [https://github.com/ggdeshmukh12107-droid/StellarSpark-DAppLevel4](https://github.com/ggdeshmukh12107-droid/StellarSpark-DAppLevel4)
 - 💧 Testnet Faucet: https://friendbot.stellar.org
