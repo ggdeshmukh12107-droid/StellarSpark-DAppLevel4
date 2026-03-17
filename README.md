@@ -145,35 +145,15 @@ https://stellar.expert/explorer/testnet/contract/CDEPLOY_YOUR_CONTRACT_ADDRESS_O
 
 ## 📸 Screenshots
 
-### Wallet Connection & Hero
-<img width="1024" alt="Hero screen with Connect Wallet button" src="public/screenshots/01-hero.png" />
-
-### Connected — Testnet Badge
-<img width="1024" alt="Header showing TESTNET badge and wallet address after connecting Freighter" src="public/screenshots/02-connected.png" />
-
 ### Mobile Responsive View
-<img width="390" alt="Mobile responsive view of the StellaFund DApp on iPhone 12 Pro dimensions" src="public/screenshots/level4-mobile-view.png" />
+<img width="919" height="943" alt="Screenshot 2026-03-18 010207" src="https://github.com/user-attachments/assets/4994b144-034b-412d-bd2b-aa691228673e" />
 
 ### CI/CD Pipeline Success
-<img width="1024" alt="GitHub Actions CI/CD pipeline showing 100% successful jobs on push to main" src="public/screenshots/level4-cicd-pipeline.png" />
-
-### Campaign Grid & Progress Bars
-<img width="1024" alt="Active campaigns grid with real-time progress bars and Live Soroban indicator" src="public/screenshots/03-campaigns.png" />
-
-### Donate Modal
-<img width="720" alt="Donate XLM modal with amount selection and custom input" src="public/screenshots/04-donate-modal.png" />
-
-### Freighter Signing Popup
-<img width="720" alt="Freighter wallet popup asking to confirm the transaction with memo" src="public/screenshots/05-freighter-popup.png" />
-
-### Donation Success ✅
-<img width="720" alt="Thank you screen confirming 10.00 XLM donation to Community Hackathon was successful" src="public/screenshots/06-success.png" />
-
+<img width="1864" height="686" alt="Screenshot 2026-03-18 010257" src="https://github.com/user-attachments/assets/42b5a3c9-cdb1-444e-911f-0bb576eaf59c" />
 
 
 ## 🎥 Demo Video
 
-> 📹 <video controls src="level-3 - Google Chrome 2026-03-09 12-06-33.mp4" title="Title"></video>
 
 ---
 
