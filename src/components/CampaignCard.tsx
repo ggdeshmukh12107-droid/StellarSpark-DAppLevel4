@@ -13,7 +13,7 @@ interface CampaignCardProps {
 
 export function CampaignCard({ campaign, onDonate, isConnected, isLoading }: CampaignCardProps) {
     const { title, description, creator, goal, raised, deadline, donations } = campaign;
-    const [isEnded, setIsEnded] = useState(() => deadline < Date.now());
+    const [isEnded, setIsEnded] = useState(false);
     const isFunded = raised >= goal;
 
     useEffect(() => {
