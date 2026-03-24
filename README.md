@@ -2,7 +2,7 @@
 
 A complete end-to-end crowdfunding dApp built on the Stellar blockchain, featuring inter-contract calls, real-time event streaming, and CI/CD.
 
-🌐 **Live Demo:** [https://stellarspark-dapplevel4.vercel.app/](https://stellarspark-dapplevel4.vercel.app/) *(Deploys from the `main` branch of this repository)*
+🌐 **Live Demo:** https://stellarfund-level4-dapp.netlify.app/*(Deploys from the `main` branch of this repository)*
 
 ---
 
