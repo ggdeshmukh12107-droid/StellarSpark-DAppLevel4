@@ -2,7 +2,7 @@
 
 A complete end-to-end crowdfunding dApp built on the Stellar blockchain, featuring inter-contract calls, real-time event streaming, and CI/CD.
 
-🌐 **Live Demo:** https://stellarfund-level4-dapp.netlify.app/*(Deploys from the `main` branch of this repository)*
+🌐 **Live Demo:** https://stellarfund-level4-dapp.netlify.app/
 
 ---
 
@@ -10,7 +10,7 @@ A complete end-to-end crowdfunding dApp built on the Stellar blockchain, featuri
 
 | Requirement | Proof |
 |---|---|
-| **Live Demo Link** | [Active Vercel Deployment](https://stellarspark-dapplevel4.vercel.app/) |
+| **Live Demo Link** | [Active Vercel Deployment](https://stellarfund-level4-dapp.netlify.app/) |
 | **Mobile Responsive View** | See *Screenshots* section below |
 | **CI/CD Pipeline Running** | ![CI Status](https://github.com/ggdeshmukh12107-droid/StellarSpark-DAppLevel4/actions/workflows/ci.yml/badge.svg) (See *Screenshots* for full pipeline view) |
 | **Main Contract Address** | `CDEPLOY_YOUR_CONTRACT_ADDRESS_ON_STELLAR_TESTNET` (Placeholder for simulation) |
